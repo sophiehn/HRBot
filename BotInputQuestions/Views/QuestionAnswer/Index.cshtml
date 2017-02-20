@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BotInputQuestions.Models.QuestionAnswer>
+
+@{
+    ViewBag.Title = "All Questions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div style="text-align:center">
+
+
+    <img src="https://cdn2.tnwcdn.com/wp-content/blogs.dir/1/files/2016/04/meya-smart-bot-1100x557.jpg" alt="" width="50%" height="50%" />
+    <br />
+
+    <h2>All Questions</h2>
+
+
+
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Question)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Answer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Topic)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Topic)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+
+
+</table>
+<div style="text-align:right">
+    <button class="btn btn-info" type="button" id="addressSearch"
+            onclick="location.href='@Url.Action("Create", "QuestionAnswer")'">
+        Add Question
+    </button>
+</div>
