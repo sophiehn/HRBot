@@ -38,10 +38,39 @@ namespace BotInputQuestions.Controllers
             return View(item);
         }
 
+        [ActionName("AddAlternative")]
+        public async Task<ActionResult> AddAlternative()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("AddAlternative")]
+        [ValidateAntiForgeryToken]
+      
+        public async Task<ActionResult> AddAlternative(QuestionAnswer item)
+        {
+            if (ModelState.IsValid)
+            {
+                var question = item.Question;
+                var items = await DocumentDBRepository<QuestionAnswer>.GetItemAsync(item.Id);
+                item = items;
+                List<string> list = new List<string>();
+                list.Add(question);
+                if (item.AlternativeQuestion == null)
+                    item.AlternativeQuestion = list;
+                else
+                    item.AlternativeQuestion.Add(question);
+                await DocumentDBRepository<QuestionAnswer>.UpdateItemAsync(item.Id, item);
+                return RedirectToAction("Index");
+            }
+            return View(item);
+        }
+
         [HttpPost]
         [ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync([Bind(Include = "Id,Question,Answer,Topic")] QuestionAnswer item)
+        public async Task<ActionResult> EditAsync([Bind(Include = "Id,Question,Answer,Topic,AlternativeQuestion")] QuestionAnswer item)
         {
             if (ModelState.IsValid)
             {

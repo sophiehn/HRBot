@@ -194,6 +194,7 @@
     <Content Include="Views\QuestionAnswer\Index.cshtml" />
     <Content Include="Views\QuestionAnswer\Create.cshtml" />
     <Content Include="Views\QuestionAnswer\Edit.cshtml" />
+    <Content Include="Views\QuestionAnswer\AddAlternative.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

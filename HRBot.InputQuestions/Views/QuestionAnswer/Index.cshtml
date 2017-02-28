@@ -14,11 +14,12 @@
 
     <h2>All Questions</h2>
 
-
-
 </div>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Topic)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Question)
         </th>
@@ -26,7 +27,7 @@
             @Html.DisplayNameFor(model => model.Answer)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Topic)
+            @Html.DisplayNameFor(model => model.AlternativeQuestion)
         </th>
         <th></th>
     </tr>
@@ -35,16 +36,30 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Topic)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Question)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Answer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Topic)
+                @if (item.AlternativeQuestion != null)
+                {
+                    foreach (var item2 in item.AlternativeQuestion)
+                    {
+                        if (item2 != "")
+                        {
+                            <ul>
+                                - @Html.DisplayFor(modelItem => item2)
+                            </ul>
+                        }
+                    }
+                }
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) | @Html.ActionLink("Add Alternative Question", "AddAlternative", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>

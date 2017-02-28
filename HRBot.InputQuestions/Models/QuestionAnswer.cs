@@ -19,5 +19,8 @@ namespace BotInputQuestions.Models
 
         [JsonProperty(PropertyName = "topic")]
         public string Topic { get; set; }
+
+        [JsonProperty(PropertyName = "alternatives")]
+        public List<string> AlternativeQuestion { get; set; }
     }
 }

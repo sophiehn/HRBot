@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Net;
+using BotInputQuestions.Models;
 
 namespace BotInputQuestions
 {
@@ -80,6 +81,15 @@ namespace BotInputQuestions
             }
 
             return results;
+
+            //        public static async Task<List<T>> GetItemsAsync(Expression<Func<T, bool>> predicate)
+            //        {
+            //            IQueryable<T> queryable =
+            //client.CreateDocumentQuery<T>(UriFactory.CreateDocumentCollectionUri("databaseId", "collectionId"))
+            //    .Where(predicate);
+
+            //            List<T> posts = queryable.ToList();
+            //            return posts;
         }
 
         public static async Task<Document> CreateItemAsync(T item)
@@ -116,7 +126,7 @@ namespace BotInputQuestions
         {
             try
             {
-               await client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
+                await client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
             }
             catch (DocumentClientException e)
             {
