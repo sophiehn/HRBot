@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add a Question/Answer Set</h2>
+<h2>Add a Question, an Answer and the Topic it covers</h2>
 
 
 @using (Html.BeginForm()) 
@@ -44,7 +44,12 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
-        To add alternative questions for this answer, first click <b>'Create'</b> in this form and then click the <b>'Add Alternative Question'</b> next to your question on the list.
+        To add <b>alternative questions</b> for this answer:<br /> <br />
+        <ul>
+            <li> Fill this form and then click <b>'Create'</b> to add the question</li>
+            <li> <b>Scroll down</b> to your newly added question on the list </li> 
+            <li> Click the <b>'Add Alternative Question'</b> next to 'Edit' and add questions that have the same answer and topic</li> 
+        </ul>
         <br /><br />
     </div>
 }
