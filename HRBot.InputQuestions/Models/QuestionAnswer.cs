@@ -22,5 +22,8 @@ namespace BotInputQuestions.Models
 
         [JsonProperty(PropertyName = "alternatives")]
         public List<string> AlternativeQuestion { get; set; }
+
+        [JsonProperty(PropertyName = "added")]
+        public bool AddedToBot { get; set; }
     }
 }

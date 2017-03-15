@@ -32,37 +32,17 @@ namespace HRBot.Client
             var attachment = new List<Attachment>();
             var actions = new List<CardAction>()
             {
-                AttachmentsHelper.CreateCardAction("Learn about MACH", "mach", ActionTypes.PostBack),
-                AttachmentsHelper.CreateCardAction("Learn about Internships", "intern", ActionTypes.PostBack),
+                AttachmentsHelper.CreateCardAction("Learn about Microsoft", "What is Microsoft", ActionTypes.PostBack),
+                AttachmentsHelper.CreateCardAction("Learn about MACH", "More info for MACH", ActionTypes.PostBack),
+                AttachmentsHelper.CreateCardAction("Learn about Internships", "More info for Intern", ActionTypes.PostBack),
                 AttachmentsHelper.CreateCardAction("Apply for a Job", "Apply for Job", ActionTypes.PostBack)
             };
             var card = AttachmentsHelper.CreateHeroCardAttachment("What do you want to know?", "Click on the buttons below to get started or type your question below", null, null, actions);
             attachment.Add(card);
             message.Attachments = attachment;
             await context.PostAsync(message);
-            // context.Wait(InputGiven);
             context.Wait(this.MessageReceived);
         }
-
-        //public async Task InputGiven(IDialogContext context, IAwaitable<IMessageActivity> argument)
-        //{
-        //    var message = await argument;
-        //    if (message.Text == "mach")
-        //    {
-        //        await context.PostAsync("More info about MACH");
-        //        context.Wait(InputGiven);
-        //    }
-        //    else if (message.Text == "intern")
-        //    {
-        //        await context.PostAsync("More info about internship");
-        //        context.Wait(InputGiven);
-        //    }
-        //    else
-        //    {
-        //        context.Wait(this.MessageReceived);
-        //    }
-
-        //}
 
         [LuisIntent("Greeting")]
         public async Task Greeting(IDialogContext context, LuisResult result)
@@ -78,6 +58,115 @@ namespace HRBot.Client
             await context.PostAsync("I am a Bot and I am here to help you with your questions concerning Microsoft Internship and MACHs programs. What do you want to know?");
             context.Wait(this.MessageReceived);
         }
+
+        [LuisIntent("Misc")]
+        public async Task Misc(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("Is there anything else I can help you with? Ask me anything :)");
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("DressCode")]
+        public async Task DressCode(IDialogContext context, LuisResult result)
+        {
+            string message = "We don’t have dress code. You are free to dress whatever you like. Most employees go with Business Casual when in the office. When we are meeting with a client, we just dress according to common sense.";
+            await context.PostAsync(message);
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("Colleagues")]
+        public async Task Colleagues(IDialogContext context, LuisResult result)
+        {
+            string message = "Colleagues Info";
+            await context.PostAsync(message);
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("MicrosoftInfo")]
+        public async Task MicrosoftInfo(IDialogContext context, LuisResult result)
+        {
+            string message = "What is microsoft..";
+            await context.PostAsync(message);
+            message = "Wanna know something specific? Just ask me :)";
+            await context.PostAsync(message);
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("WorkingForMicrosoft")]
+        public async Task WorkingForMicrosoft(IDialogContext context, LuisResult result)
+        {
+            List<string> intents = new List<string>();
+            List<string> entities = new List<string>();
+            string message = "";
+            foreach (var e in result.Intents)
+            {
+                intents.Add(e.Intent);
+            }
+            foreach (var e in result.Entities)
+            {
+                entities.Add(e.Entity);
+            }
+            if (entities.Count > 0)
+            {
+                if (entities[0].Contains("culture"))
+                    message = "We have several values: Growth mindset. Customer obsessed. Diversity and inclusion. One Microsoft. Making a difference";
+                else if (entities[0].Contains("mission") || entities[0].Contains("strategy"))
+                    message = "Our mission/strategy is to empower every person and every organization on the planet to achieve more.";
+            }
+            else
+            {
+                message = "It is amazing to work at Microsoft, especially when you are at the start of your career. One of best things about working in the technology industry is its fast pace.With significant developments happening all the time, technology is changing and staying up-to - date is crucial, so people are looking for ways to keep themselves relevant. Microsoft provides great opportunities to learn about both the company and the technologies, and helps you to grow and learn more and more.";
+            }
+            await context.PostAsync(message);
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("WorkingHours")]
+        public async Task WorkingHours(IDialogContext context, LuisResult result)
+        {
+            List<string> intents = new List<string>();
+            List<string> entities = new List<string>();
+            string message = "";
+            foreach (var e in result.Intents)
+            {
+                intents.Add(e.Intent);
+            }
+            foreach (var e in result.Entities)
+            {
+                entities.Add(e.Entity);
+            }
+            if (entities.Count > 0)
+            {
+                if (entities[0].Contains("weekend"))
+                    message = "We have several values: Growth mindset. Customer obsessed. Diversity and inclusion. One Microsoft. Making a difference";
+                else if (entities[0].Contains("overtime"))
+                    message = "Microsoft employees have flexible working hours and we give them up to 3 additional days of vacation in this case.";
+                else if (entities[0].Contains("home"))
+                    message = "Of course. How often? It depends on your arrangement with your manager, work load, and outside factors like customer appointments.";
+            }
+            else
+            {
+                message = "We have flexible working hours. The work amount depends on the role and your ability to prioritize tasks. ";
+            }
+            await context.PostAsync(message);
+            context.Wait(this.MessageReceived);
+        }
+        
+        //[LuisIntent("DressCode")]
+        //public async Task DressCode(IDialogContext context, LuisResult result)
+        //{
+        //    string message = "We don’t have dress code. You are free to dress whatever you like. Most employees go with Business Casual when in the office. When we are meeting with a client, we just dress according to common sense.";
+        //    await context.PostAsync(message);
+        //    context.Wait(this.MessageReceived);
+        //}
+
+        //[LuisIntent("DressCode")]
+        //public async Task DressCode(IDialogContext context, LuisResult result)
+        //{
+        //    string message = "We don’t have dress code. You are free to dress whatever you like. Most employees go with Business Casual when in the office. When we are meeting with a client, we just dress according to common sense.";
+        //    await context.PostAsync(message);
+        //    context.Wait(this.MessageReceived);
+        //}
 
         [LuisIntent("SalaryInfo")]
         public async Task SalaryInfo(IDialogContext context, LuisResult result)
@@ -103,7 +192,6 @@ namespace HRBot.Client
         [LuisIntent("Benefits")]
         public async Task Benefits(IDialogContext context, LuisResult result)
         {
-            // var message = await activity;
             string message = "";
             List<string> intents = new List<string>();
             List<string> entities = new List<string>();
@@ -119,21 +207,19 @@ namespace HRBot.Client
             {
                 if (entities[0].Contains("car"))
                     message = "Interns are not eligidble for corporate cars. If you are a MACH, you can get a corporate car but it depends on the role. You are elidgible for one if your role is customer facing (for example: Solution Sales, Account Manager, Technical Sales)";
-                if (entities[0].Contains("phone") || entities[0].Contains("mobile") || entities[0].Contains("cell"))
+                else if (entities[0].Contains("phone") || entities[0].Contains("mobile") || entities[0].Contains("cell"))
                     message = "For most positions, you get a smartphone and a corporate phone number once you are hired. You can also use your own phone if you like.";
-                if (entities[0].Contains("laptop") || entities[0].Contains("pc") || entities[0].Contains("computer"))
+                else if (entities[0].Contains("laptop") || entities[0].Contains("pc") || entities[0].Contains("computer"))
                     message = "We have broad pool of laptops. Sometimes you get to choose, depending on your role. You can also use your own device, if you like.";
-                if (entities[0].Contains("food") || entities[0].Contains("lunch") || entities[0].Contains("dinner"))
+                else if (entities[0].Contains("food") || entities[0].Contains("lunch") || entities[0].Contains("dinner"))
                     message = "In some countries, you will get a lunch allowance every month for free to use in the Microsoft Cafeteria.";
-                if (entities[0].Contains("perk") || entities[0].Contains("benefit") || entities[0].Contains("social"))
+                else if (entities[0].Contains("perk") || entities[0].Contains("benefit") || entities[0].Contains("social"))
                     message = "Depending on the country you can be provided with life and medical Insurance for and your family, food and beverages, flexible hours and working from home facilities, Corp Car (if eligible), Latest Devices.";
                 else
                     message = "Depending on the country and if you are an Intern or a MACH, you can be provided with life and medical Insurance for and your family, food and beverages, flexible hours and working from home facilities, Corp Car (if eligible), Latest Devices.";
             }
-
             await context.PostAsync(message);
             context.Wait(this.MessageReceived);
-
         }
 
         [LuisIntent("InfoForMSProducts")]
@@ -173,7 +259,7 @@ namespace HRBot.Client
                         message = "Sway is story telling app, which is also part of Microsoft Office and designed for creating presentations, is in many ways an alternative to PowerPoint.But what is the difference and what can it do? The purpose of Sway is to convey concepts quickly, easily and clearly. Unlike PowerPoint, it is primarily for presenting ideas onscreen rather than to an audience.Tutorials, topic introductions and interactive reports are the sort of things to which it lends itself.Sway presentations are backed up to the cloud, and can be easily shared or embedded in websites.Check examples here: https://sway.com/";
                         break;
                     default:
-                        message = "Default message on Info for MS Products";
+                        message = "What kind of product are you interested in?";
                         break;
                 }
             }
@@ -200,29 +286,128 @@ namespace HRBot.Client
             if (entities.Count > 0)
             {
                 if (entities[0] == "mach")
-                    await context.PostAsync("More info about MACH");
+                    await context.PostAsync("The Microsoft Academy for College Hires (MACH) is as an accelerated career development program designed to recruit and hire top-performing graduates across a broad range of roles, and aims to cultivate your talent utilizing training, mentoring, and community support.");
                 else if (entities[0].Contains("intern"))
-                    await context.PostAsync("More info about internships");
+                    await context.PostAsync("At Microsoft, our interns work on projects that matter – and your team will rely on your skills and insights to help deliver those projects to market. You’ll get the opportunity to work on real projects and have fun along the way. This is your chance to show off your skills and work on cutting-edge technology. We offer internships in all job families and product areas. Imagine yourself as a Microsoft intern. Join Microsoft today, and help us shape the business of tomorrow.");
                 else if (entities[0].Contains("no"))
                     await context.PostAsync("Don't worry, you can still apply for all the other roles at https://careers.microsoft.com/");
             }
             else
             {
-                await context.PostAsync("That's cool! Are you a student? If yes, there are two Graduate Opportunities for you.");
                 var message = context.MakeMessage();
                 message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                 var attachment = new List<Attachment>();
                 var actions = new List<CardAction>()
             {
                 AttachmentsHelper.CreateCardAction("MACH Opportunities", "more info for mach", ActionTypes.PostBack),
-                AttachmentsHelper.CreateCardAction("Internships Opportunities", "more info for intern", ActionTypes.PostBack),
-                AttachmentsHelper.CreateCardAction("I am not a Student", "i want to know more but no-student", ActionTypes.PostBack)
+                AttachmentsHelper.CreateCardAction("Internship Opportunities", "more info for intern", ActionTypes.PostBack),
+                AttachmentsHelper.CreateCardAction("Non-Student Opportunities", "i want to know more but no-student", ActionTypes.PostBack)
             };
                 var card = AttachmentsHelper.CreateHeroCardAttachment("What do you want to know?", "Click on the buttons below to learn more about the opportunities", null, null, actions);
                 attachment.Add(card);
                 message.Attachments = attachment;
                 await context.PostAsync(message);
             }
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("DurationInfo")]
+        public async Task DurationInfo(IDialogContext context, LuisResult result)
+        {
+            List<string> intents = new List<string>();
+            List<string> entities = new List<string>();
+            foreach (var e in result.Intents)
+            {
+                intents.Add(e.Intent);
+            }
+            foreach (var e in result.Entities)
+            {
+                entities.Add(e.Entity);
+            }
+            if (entities.Count > 0)
+            {
+                if (entities[0] == "mach")
+                    await context.PostAsync("Usually about 2 years.");
+                else if (entities[0].Contains("intern"))
+                    await context.PostAsync("Internships last from 3 to 6 months, depending on the country and position.");
+            }
+            else
+                await context.PostAsync("Our MACH and MACH MBA Programs usually last for 2 years and the internship programs last from 3 to 6 months.");
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("Trainings")]
+        public async Task Trainings(IDialogContext context, LuisResult result)
+        {
+            List<string> intents = new List<string>();
+            List<string> entities = new List<string>();
+            foreach (var e in result.Intents)
+            {
+                intents.Add(e.Intent);
+            }
+            foreach (var e in result.Entities)
+            {
+                entities.Add(e.Entity);
+            }
+            if (entities.Count > 0)
+            {
+                if (entities[0] == "mach")
+                    await context.PostAsync("The MACH program includes 3 to 4 trainings abroad and other local trainings about products, personal development, etc.");
+                else if (entities[0].Contains("intern"))
+                    await context.PostAsync("It strongly depends, but internship periods are usually very short to incluse international trainings. They can participate in all local trainings regarding aspects of licensing, products ussies, personal development. Also they have their personal development plan, which they concentrate on.");
+            }
+            else
+                await context.PostAsync("Microsoft stimulates the interest of its employees in learning by sending them to International conferences regarding their role, paying for technical certifications or providing instructor-led trainings. Interns and MACHS have specific trainings on top of that.");
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("InterviewProccess")]
+        public async Task InterviewProccess(IDialogContext context, LuisResult result)
+        {
+            List<string> intents = new List<string>();
+            List<string> entities = new List<string>();
+            foreach (var e in result.Intents)
+            {
+                intents.Add(e.Intent);
+            }
+            foreach (var e in result.Entities)
+            {
+                entities.Add(e.Entity);
+            }
+            if (entities.Count > 0)
+            {
+                if (entities[0] == "mach")
+                    await context.PostAsync("First of all you apply via our Careers Site, answer a few questions about your background and share your CV. Then the strongest candidates have a chance to go through a test, video and Skype interview. The finalists are invited to the face-to-face assessment with Microsoft managers in the local Microsoft Office. Usually the selection process starts in March and is finished by Summer. So all the stages from the application to the final stage can take up to 4 months.");
+                else if (entities[0].Contains("intern"))
+                    await context.PostAsync("First of all you apply via our Careers Site, answer a few questions about your background and share your CV. Then the strongest candidates have a chance to go through a test, video and Skype interview. The finalists are invited to the face-to-face assessment with Microsoft managers in the local Microsoft Office. Usually the selection process starts in March or September. So all the stages from the application to the final stage can take up to 4 months.");
+            }
+            else
+                await context.PostAsync("First of all you apply via our Careers Site, answer a few questions about your background and share your CV. Then the strongest candidates have a chance to go through a test, video and Skype interview. The finalists are invited to the face-to-face assessment with Microsoft managers in the local Microsoft Office. Usually the selection process starts in March and finished in May/June. So all the stages from the application to the final stage can take up to 4 months.");
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("Criteria")]
+        public async Task Criteria(IDialogContext context, LuisResult result)
+        {
+            List<string> intents = new List<string>();
+            List<string> entities = new List<string>();
+            foreach (var e in result.Intents)
+            {
+                intents.Add(e.Intent);
+            }
+            foreach (var e in result.Entities)
+            {
+                entities.Add(e.Entity);
+            }
+            if (entities.Count > 0)
+            {
+                if (entities[0] == "mach")
+                    await context.PostAsync("For the MACH Program you need to be a final year student or fresh university graduate. If you have an MBA, you are elidgible for the MACH MBA Program. The detailed list of requirement is available for each open role.  In brief, we are looking for a final year student or recent graduates (bachelors or Masters), motivated, bright, curious and young, with strong passion for Microsoft and good English skills.");
+                else if (entities[0].Contains("intern"))
+                    await context.PostAsync("For internshop positions, you need to be a student or fresh university graduate. The detailed list of requirement is available for each open role.  In brief, we are looking for a final year student or recent graduates (bachelors or Masters), motivated, bright, curious and young, with strong passion for Microsoft and good English skills.");
+            }
+            else
+                await context.PostAsync("The detailed list of requirement is available for each open role.  In brief, we are looking for motivated, bright and curious young people with strong passion for Microsoft and  good English skills.");
             context.Wait(this.MessageReceived);
         }
 
@@ -296,17 +481,16 @@ namespace HRBot.Client
             }
             else
             {
-                await context.PostAsync("Are you a student? If yes, there are two Graduate Opportunities for you.");
                 var message = context.MakeMessage();
                 message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                 var attachment = new List<Attachment>();
                 var actions = new List<CardAction>()
             {
-                AttachmentsHelper.CreateCardAction("MACH Opportunities", "apply for mach", ActionTypes.PostBack),
-                AttachmentsHelper.CreateCardAction("Internships Opportunities", "apply for intern", ActionTypes.PostBack),
-                AttachmentsHelper.CreateCardAction("I am not a Student", "apply but no-student", ActionTypes.PostBack)
+                AttachmentsHelper.CreateCardAction("MACH Positions", "apply for mach", ActionTypes.PostBack),
+                AttachmentsHelper.CreateCardAction("Internships Positions", "apply for intern", ActionTypes.PostBack),
+                AttachmentsHelper.CreateCardAction("Non-Student Positions", "apply but no-student", ActionTypes.PostBack)
             };
-                var card = AttachmentsHelper.CreateHeroCardAttachment("What do you want to know?", "Click on the buttons below to learn more about the opportunities", null, null, actions);
+                var card = AttachmentsHelper.CreateHeroCardAttachment("For what position are you interested in?", "Click on the buttons below to learn more about the opportunities", null, null, actions);
                 attachment.Add(card);
                 message.Attachments = attachment;
                 await context.PostAsync(message);

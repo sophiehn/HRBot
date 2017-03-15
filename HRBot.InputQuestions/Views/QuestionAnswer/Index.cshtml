@@ -29,6 +29,9 @@
         <th>
             @Html.DisplayNameFor(model => model.AlternativeQuestion)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddedToBot)
+        </th>
         <th></th>
     </tr>
 
@@ -43,6 +46,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddedToBot)
             </td>
             <td>
                 @if (item.AlternativeQuestion != null)
